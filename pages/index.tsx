@@ -1,29 +1,38 @@
 import type { GetServerSideProps, NextPage } from 'next';
 import Message from './components/message';
 import MessageBox from './components/messageBox';
-import MessageProps from './interfaces/MessageProps';
+import MessageProps from './types';
 import { supabase } from './supabaseClient';
+import { useEffect, useState } from 'react';
 
-const Main: NextPage = ({ data }: any) => {
-  /*  const data: MessageProps = {
-    name: 'CognusBoi',
-    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    timestamp: new Date(),
-  }; */
+const Main: NextPage<{ data: Array<MessageProps> }> = ({ data }) => {
+  const [msgList, setMsgList] = useState<Array<MessageProps>>(data);
 
-  console.log(data);
+  // INFO: Don't touch this
+  const msgSubs = supabase
+    .from<MessageProps>('messages')
+    .on('INSERT', (message) => {
+      setMsgList((oldMsg) => {
+        return oldMsg.concat(message.new);
+      });
+      console.log(msgList);
+    })
+    .subscribe();
 
   return (
     <div className='container mx-auto flex flex-col justify-between h-screen'>
-      <div className='overflow-y-auto'></div>
-      <div>
-        {data.map((msg: MessageProps) => (
+      <div className='overflow-y-auto'>
+        {msgList.map((msg: MessageProps) => (
           <Message
+            key={msg.id}
+            id={msg.id}
             username={msg.username}
             content={msg.content}
             created_at={new Date(msg.created_at)}
           />
         ))}
+      </div>
+      <div>
         <MessageBox />
       </div>
     </div>
