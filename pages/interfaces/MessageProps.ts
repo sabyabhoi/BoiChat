@@ -1,5 +1,5 @@
 export default interface MessageProps {
-  name: string;
+  username: string;
   content: string;
-  timestamp: Date;
+  created_at: Date;
 }
