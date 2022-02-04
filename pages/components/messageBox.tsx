@@ -7,7 +7,7 @@ const MessageBox: NextComponentType = () => {
         placeholder='Enter your message here'
         className='outline-none flex-grow-[6] bg-secondary-lite resize-none rounded-md'
       ></textarea>
-      <button className='flex-grow bg-red text-secondary font-bold text-lg rounded-md'>
+      <button className='flex-grow bg-red-dark hover:bg-red text-secondary font-bold text-lg rounded-md'>
         Send
       </button>
     </div>

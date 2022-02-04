@@ -9,15 +9,17 @@ const Main: NextPage<{ data: Array<MessageProps> }> = ({ data }) => {
   const [msgList, setMsgList] = useState<Array<MessageProps>>(data);
 
   // INFO: Don't touch this
-  const msgSubs = supabase
-    .from<MessageProps>('messages')
-    .on('INSERT', (message) => {
-      setMsgList((oldMsg) => {
-        return oldMsg.concat(message.new);
-      });
-      console.log(msgList);
-    })
-    .subscribe();
+  useEffect(() => {
+    const msgSubs = supabase
+      .from<MessageProps>('messages')
+      .on('INSERT', (message) => {
+        setMsgList((oldMsg) => {
+          return oldMsg.concat(message.new);
+        });
+        console.log(msgList);
+      })
+      .subscribe();
+  }, []);
 
   return (
     <div className='container mx-auto flex flex-col justify-between h-screen'>

@@ -6,11 +6,12 @@ module.exports = {
   theme: {
 		extend: { },
 		colors: {
-			primary: '#ebdbb2',
-			secondary: '#282828',
-			'secondary-lite': '#3c3836',
-			mute: '#928374',
-			red: '#fb4934',
+			primary: '#a9b1d6',
+			secondary: '#24283b',
+			'secondary-lite': '#414868',
+			mute: '#565f89',
+			red: '#f7768e',
+			'red-dark': '#8c4351',
 		}
   },
   plugins: [],
