@@ -1,42 +1,16 @@
 import type { GetServerSideProps, NextPage } from 'next';
-import Message from './components/message';
-import MessageBox from './components/messageBox';
+import MessageList from './components/messageList';
+import ChatBox from './components/chatBox';
+import Navbar from './components/navbar';
 import MessageProps from './types';
 import { supabase } from './supabaseClient';
-import { useEffect, useState } from 'react';
 
 const Main: NextPage<{ data: Array<MessageProps> }> = ({ data }) => {
-  const [msgList, setMsgList] = useState<Array<MessageProps>>(data);
-
-  // INFO: Don't touch this
-  useEffect(() => {
-    const msgSubs = supabase
-      .from<MessageProps>('messages')
-      .on('INSERT', (message) => {
-        setMsgList((oldMsg) => {
-          return oldMsg.concat(message.new);
-        });
-        console.log(msgList);
-      })
-      .subscribe();
-  }, []);
-
   return (
-    <div className='container mx-auto flex flex-col justify-between h-screen'>
-      <div className='overflow-y-auto'>
-        {msgList.map((msg: MessageProps) => (
-          <Message
-            key={msg.id}
-            id={msg.id}
-            username={msg.username}
-            content={msg.content}
-            created_at={new Date(msg.created_at)}
-          />
-        ))}
-      </div>
-      <div>
-        <MessageBox />
-      </div>
+    <div className='container mx-auto flex flex-col justify-between h-screen max-h-screen'>
+			<Navbar />
+      <MessageList data={data} />
+      <ChatBox />
     </div>
   );
 };

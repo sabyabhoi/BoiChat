@@ -3,8 +3,12 @@
 @tailwind utilities;
 
 @layer components {
-	body {
-		@apply bg-secondary text-primary;
-	}
+  body {
+    @apply bg-secondary text-primary;
+  }
+  button {
+    @apply text-secondary px-4 py-2 font-bold rounded-md outline-none
+		bg-blue hover:bg-blue-dark
+		transition-all duration-100 ease-linear;
+  }
 }
-

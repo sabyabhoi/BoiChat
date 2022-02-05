@@ -12,6 +12,8 @@ module.exports = {
 			mute: '#565f89',
 			red: '#f7768e',
 			'red-dark': '#8c4351',
+			blue: '#7aa2f7',
+			'blue-dark': '#496194',
 		}
   },
   plugins: [],
