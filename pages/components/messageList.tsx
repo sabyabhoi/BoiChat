@@ -19,13 +19,17 @@ const MessageList: NextPage<{ data: Array<MessageProps> }> = ({ data }) => {
       })
       .subscribe();
   }, []);
+
+	console.log(msgList);
+
   return (
-    <div className='flex flex-col-reverse overflow-y-auto'>
+    <div className='flex flex-col-reverse overflow-y-auto flex-grow'>
       {msgList
         .slice(0)
         .reverse()
         .map((msg: MessageProps) => (
           <Message
+						avatar={msg.avatar}
             key={msg.id}
             id={msg.id}
             username={msg.username}
