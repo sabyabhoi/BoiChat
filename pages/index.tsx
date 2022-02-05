@@ -7,7 +7,7 @@ import { supabase } from './supabaseClient';
 
 const Main: NextPage<{ data: Array<MessageProps> }> = ({ data }) => {
   return (
-    <div className='container mx-auto flex flex-col justify-between h-screen max-h-screen'>
+    <div className='container mx-auto flex flex-col justify-between h-screen max-h-screen gap-y-2'>
 			<Navbar />
       <MessageList data={data} />
       <ChatBox />
