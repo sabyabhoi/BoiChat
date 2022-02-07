@@ -1,7 +1,7 @@
 import { User } from '@supabase/supabase-js';
 import { useState } from 'react';
-import { SiDiscord } from 'react-icons/si';
 import { supabase } from '../supabaseClient';
+import { SiDiscord } from 'react-icons/si';
 
 const Navbar = () => {
   const [user, setUser] = useState<User | null>(supabase.auth.user());
@@ -13,7 +13,10 @@ const Navbar = () => {
     setUser(user);
   };
 
-	console.log(user);
+  const signOut = async () => {
+    await supabase.auth.signOut();
+    setUser(null);
+  };
 
   return (
     <header className='py-3 flex items-center justify-between'>
@@ -23,7 +26,12 @@ const Navbar = () => {
           <SiDiscord /> Sign in
         </button>
       ) : (
-        <h4 className='text-red text-md font-bold'>{user.user_metadata.full_name}</h4>
+        <div className='flex flex-row items-center gap-x-2'>
+          <h4 className='text-red text-lg font-bold'>
+            signed in as {user!.user_metadata.full_name}
+          </h4>
+          <button onClick={signOut}>Sign Out</button>
+        </div>
       )}
     </header>
   );
