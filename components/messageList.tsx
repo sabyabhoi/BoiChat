@@ -1,7 +1,7 @@
 import { NextPage } from 'next/types';
 import { useEffect, useState } from 'react';
-import { supabase } from '../supabaseClient';
-import MessageProps from '../types';
+import { supabase } from './supabaseClient';
+import MessageProps from './types';
 import Message from './message';
 
 const MessageList: NextPage<{ data: Array<MessageProps> }> = ({ data }) => {
@@ -12,15 +12,12 @@ const MessageList: NextPage<{ data: Array<MessageProps> }> = ({ data }) => {
     const msgSubs = supabase
       .from<MessageProps>('messages')
       .on('INSERT', (message) => {
-        setMsgList((oldMsg) => {
-          return oldMsg.concat(message.new);
-        });
-        console.log(msgList);
+        setMsgList((oldMsg) => oldMsg.concat(message.new));
       })
       .subscribe();
   }, []);
 
-	console.log(msgList);
+//  console.log(msgList);
 
   return (
     <div className='flex flex-col-reverse overflow-y-auto flex-grow'>
@@ -29,7 +26,7 @@ const MessageList: NextPage<{ data: Array<MessageProps> }> = ({ data }) => {
         .reverse()
         .map((msg: MessageProps) => (
           <Message
-						avatar={msg.avatar}
+            avatar={msg.avatar}
             key={msg.id}
             id={msg.id}
             username={msg.username}

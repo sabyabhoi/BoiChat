@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import MessageProps from '../types';
+import MessageProps from './types';
 
 //import profile_pic from '../../public/profile_pic.png';
 import { NextPage } from 'next';
@@ -13,7 +13,7 @@ const Message: NextPage<MessageProps> = ({ avatar, username, content, created_at
       <div className='flex flex-col w-full'>
         <h5 className='text-lg font-bold text-red'>{username}</h5>
         <p>{content}</p>
-        <div className='self-end text-mute'>{created_at.toLocaleString()}</div>
+        <div className='self-end text-mute'>{created_at!.toLocaleString()}</div>
       </div>
     </div>
   );
