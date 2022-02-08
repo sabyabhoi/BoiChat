@@ -9,9 +9,15 @@ import { User } from '@supabase/supabase-js';
 
 const Main: NextPage<{ data: Array<MessageProps> }> = ({ data }) => {
   const [user, setUser] = useState<User | null>(supabase.auth.user());
+  const [loading, setLoading] = useState<Boolean>(false);
   return (
     <div className='container mx-auto flex flex-col justify-between h-screen max-h-screen gap-y-2'>
-      <Navbar user={user} setUser={setUser} />
+      <Navbar
+        user={user}
+        setUser={setUser}
+        loading={loading}
+        setLoading={setLoading}
+      />
       <MessageList data={data} />
       <ChatBox user={user} />
     </div>

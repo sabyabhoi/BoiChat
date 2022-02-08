@@ -1,24 +1,42 @@
+// https://boi-chat.vercel.app/
 import { User } from '@supabase/supabase-js';
 import { supabase } from './supabaseClient';
 import { SiDiscord } from 'react-icons/si';
+import { useEffect } from 'react';
 
 const Navbar: React.FC<{
   user: User | null;
   setUser: (userAuth: User | null) => void;
-}> = ({ user, setUser }) => {
-  const signIn = async () => {
+  loading: Boolean;
+  setLoading: (loading: Boolean) => void;
+}> = ({ user, setUser, loading, setLoading }) => {
+  const signIn = async (e: any) => {
+    //		e.preventDefault();
+    setLoading(true);
     const { user } = await supabase.auth.signIn({
       provider: 'discord',
     });
     setUser(user);
+    // supabase.auth.onAuthStateChange((event, session) => {
+    //   console.log(event, session);
+    // });
+    setTimeout(() => {
+      setLoading(false);
+    }, 3000);
   };
+
+  useEffect(() => {
+    supabase.auth.onAuthStateChange((event, session) => {
+      if (event == 'SIGNED_IN') setUser(session!.user);
+    });
+  }, []);
 
   const signOut = async () => {
     await supabase.auth.signOut();
     setUser(null);
   };
 
-//	console.log(user);
+  //	console.log(user);
 
   return (
     <header className='py-3 flex items-center justify-between'>
